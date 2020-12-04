@@ -2,7 +2,8 @@
 // =============================================================
 var express = require("express");
 var path = require("path");
-var fs = require("fs")
+var fs = require("fs");
+var tables = require("./tables.json")
 
 // Sets up the Express App
 // =============================================================
@@ -15,7 +16,7 @@ app.use(express.json());
 
 // Empty Table (DATA)
 // =============================================================
-var tables = [];
+
 var waitlist = [];
 
 // Routes
@@ -33,16 +34,23 @@ app.get("/tables", function(req, res) {
 res.sendFile(path.join(__dirname, "tables.html"));
 });
 
-// 
+app.post("/api/tables", function(req, res){
+  let newReserve = req.body;
+  tables.push(newReserve)
+  return res.json(tables)
+});
+
 app.get("/api/tables", function(req, res) {
-    fs.readFile("reserve.html", data, function (err) {
-      err ? console.log(err) : console.log("Success!")
-    })
 return res.json(tables);
 });
+
 app.get("/api/waitlist", function(req, res) {
 return res.json(waitlist);
 });
+
+app.post("/api/tables", function(req, res) {
+
+})
 
 
 app.listen(PORT, function() {
