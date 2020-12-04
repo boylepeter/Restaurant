@@ -105,7 +105,7 @@
       // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
       // depending on if a tables is available or not.
   
-      $.post("/api/tables", newReservation,
+      $.post("/tables.json", newReservation,
         function(data) {
   
           // If a table is available... tell user they are booked.
@@ -123,6 +123,7 @@
           $("#reserve-phone").val("");
           $("#reserve-email").val("");
           $("#reserve-unique-id").val("");
+
   
         });
   
