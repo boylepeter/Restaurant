@@ -4,6 +4,7 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 var tables = require("./tables.json")
+var waitlist = require("./waitlist.json")
 
 // Sets up the Express App
 // =============================================================
@@ -13,11 +14,6 @@ var PORT = process.env.PORT ? process.env.PORT : 3000;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// Empty Table (DATA)
-// =============================================================
-
-var waitlist = [];
 
 // Routes
 // =============================================================
@@ -36,7 +32,11 @@ res.sendFile(path.join(__dirname, "tables.html"));
 
 app.post("/api/tables", function(req, res){
   let newReserve = req.body;
-  tables.push(newReserve)
+  if(tables.length < 5){
+    tables.push(newReserve)
+  }
+  else(waitlist.push(newReserve));
+
   return res.json(tables)
 });
 
