@@ -2,6 +2,7 @@
 // =============================================================
 var express = require("express");
 var path = require("path");
+var fs = require("fs")
 
 // Sets up the Express App
 // =============================================================
@@ -34,6 +35,9 @@ res.sendFile(path.join(__dirname, "tables.html"));
 
 // 
 app.get("/api/tables", function(req, res) {
+    fs.readFile("reserve.html", data, function (err) {
+      err ? console.log(err) : console.log("Success!")
+    })
 return res.json(tables);
 });
 app.get("/api/waitlist", function(req, res) {
